@@ -14,5 +14,9 @@ RUN subscription-manager repos --disable '*' --enable rhel-7-server-rpms
 RUN yum update -y ; yum clean all
 
 RUN yum install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm -y
-RUN yum install p7zip xorriso syslinux createrepo -y
+RUN yum install p7zip xorriso syslinux createrepo httpd -y
+RUN ln -s /app/htmlpub /var/www/html/pub
 
+WORKDIR /app
+CMD ["-DFOREGROUND"]
+ENTRYPOINT ["/usr/sbin/httpd"]
